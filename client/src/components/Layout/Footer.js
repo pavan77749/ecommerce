@@ -1,9 +1,15 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Footer() {
   return (
-    <div className='bg-dark text-light py-3'>
-        <h4 className='text-center'>All Right Reserved &copy; Messho</h4>
+    <div className='footer'>
+        <h4 className='text-center'>All Right Reserved &copy; Ecommerce Shop</h4>
+        <p className='text-center mt-3'>
+          <Link to="/about">About</Link>|
+          <Link to="/contact">Contact</Link>|
+          <Link to="/policy">Policy</Link>
+        </p>
     </div>
   )
 }
