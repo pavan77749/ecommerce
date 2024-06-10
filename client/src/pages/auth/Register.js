@@ -53,7 +53,7 @@ const Register = () => {
             <input type="text" value={address} onChange={(e) => setAddress(e.target.value)}  className="form-control" id="exampleInputPassword1" placeholder='Enter your Address' required />
         </div>
        
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Register</button>
         </form>
 
         </div>

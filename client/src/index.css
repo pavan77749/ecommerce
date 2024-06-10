@@ -22,10 +22,10 @@
 
 }
 .nav-link {
-  font-size: 300 !important;
+  font-size: 300 !important; 
 }
 .active{
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #ff5f00;
 }
 .navbar-brand{
   font-weight: 700;
