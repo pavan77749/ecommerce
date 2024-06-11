@@ -44,7 +44,7 @@ const Login = () => {
     <Layout title="login - Ecommerce Shop">
         <div className="form-container" >
         <form onSubmit={handleSubmit}>
-            <h1>Login Now</h1>
+            <h1 style={{textAlign:"center"}}>Login Now</h1>
       
         <div className="mb-3">
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}  className="form-control" id="exampleInputEmail1" placeholder='Enter your Email'  required/>    
@@ -53,6 +53,9 @@ const Login = () => {
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}  className="form-control" id="exampleInputEmail1"  placeholder='Enter your Password' required/>    
         </div>
         <button type="submit" className="btn btn-primary">Login</button>
+        <div className='mt-3'>
+        <button type="button" className="btn btn-primary" onClick={()=>{navigate('/forgot-password')}}>Forget Password ?</button>
+        </div>
         </form>
 
         </div>
