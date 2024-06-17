@@ -7,6 +7,9 @@ import { singleProductController } from "../controllers/productController.js";
 import { productPhotoController } from "../controllers/productController.js";
 import { deleteProductController } from "../controllers/productController.js";
 import { updateProductController } from "../controllers/productController.js";
+import { productFiltersController } from "../controllers/productController.js";
+import { productCountController } from "../controllers/productController.js";
+import { productListController } from "../controllers/productController.js";
 
 //router object
 const router = express.Router()
@@ -40,5 +43,14 @@ router.put(
   formidable(),
   updateProductController
 );
+
+//filter-product
+router.post("/product-filters", productFiltersController)
+
+//product-count
+router.get("/product-count", productCountController)
+
+// product per page
+router.get("/product-list/:page",productListController)
 
 export default router
