@@ -218,7 +218,7 @@ const UpdateProduct = () => {
                 <button className="btn btn-primary ms-3" onClick={handleUpdate}>
                   UPDATE PRODUCT
                 </button>
-              
+
                 <button className="btn btn-danger ms-3" onClick={handleDelete}>
                   DELETE PRODUCT
                 </button>

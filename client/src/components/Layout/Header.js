@@ -1,22 +1,25 @@
-import React from 'react'
-import { NavLink, Link } from 'react-router-dom'
-import { useAuth } from '../../context/auth'
-import toast from "react-hot-toast"
+import React from "react";
+import { NavLink, Link } from "react-router-dom";
+import { useAuth } from "../../context/auth";
+import toast from "react-hot-toast";
+import SearchInput from "../form/SearchInput";
 
 function Header() {
-  const [auth,setAuth] = useAuth()
-  const handleLogout = () =>{
+  const [auth, setAuth] = useAuth();
+  const handleLogout = () => {
     setAuth({
-      ...auth, user:null, token:""
-    })
-    localStorage.removeItem('auth')
-    toast.success("Logout successfully")
-  }
+      ...auth,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("auth");
+    toast.success("Logout successfully");
+  };
   return (
     <>
-<nav className="navbar navbar-expand-lg bg-body-tertiary">
-  <div className="container-fluid">
-  <button
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <div className="container-fluid">
+          <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -28,9 +31,20 @@ function Header() {
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-<Link className="navbar-brand" to='/' >  <img src="https://cdn-icons-png.freepik.com/256/13429/13429013.png?ga=GA1.1.2135091468.1717868355&semt=ais_hybrid" alt="logo" height="50px" width="auto"/> Ecommerce Shop</Link>
-    
-<ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <Link className="navbar-brand" to="/">
+              {" "}
+              <img
+                src="https://cdn-icons-png.freepik.com/256/13429/13429013.png?ga=GA1.1.2135091468.1717868355&semt=ais_hybrid"
+                alt="logo"
+                height="50px"
+                width="auto"
+              />{" "}
+              Ecommerce Shop
+            </Link>
+            <div className="d-flex align-items-center ms-auto">
+              <SearchInput style={{ width: "250px" }} />
+            </div>
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <NavLink to="/" className="nav-link ">
                   Home
@@ -96,16 +110,11 @@ function Header() {
                 </NavLink>
               </li>
             </ul>
-     
-    </div>
-    
-  </div>
-</nav>
-
+          </div>
+        </div>
+      </nav>
     </>
-  )
+  );
 }
 
-export default Header
-
-
+export default Header;
