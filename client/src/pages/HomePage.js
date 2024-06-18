@@ -3,7 +3,7 @@ import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices";
-import { Navigate,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -13,9 +13,16 @@ function HomePage() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const [noProductsFound, setNoProductsFound] = useState(false); // State to track if no products are found
+  const navigate = useNavigate();
 
-  //get all categories
+  // Fetch categories and total count on initial load
+  useEffect(() => {
+    getAllCategory();
+    getTotal();
+  }, []);
+
+  // Fetch all categories
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
@@ -26,12 +33,8 @@ function HomePage() {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getAllCategory();
-    getTotal();
-  }, []);
 
-  //get Total Count
+  // Fetch total count of products
   const getTotal = async () => {
     try {
       const { data } = await axios.get("/api/v1/products/product-count");
@@ -41,12 +44,14 @@ function HomePage() {
     }
   };
 
+  // Load more products when page changes
   useEffect(() => {
     if (page === 1) return;
-    LoadMore();
+    loadMoreProducts();
   }, [page]);
-  //load more
-  const LoadMore = async () => {
+
+  // Load more products
+  const loadMoreProducts = async () => {
     try {
       setLoading(true);
       const { data } = await axios.get(`/api/v1/products/product-list/${page}`);
@@ -58,7 +63,7 @@ function HomePage() {
     }
   };
 
-  //get-all products
+  // Fetch all products without filters
   const getAllProducts = async () => {
     try {
       setLoading(true);
@@ -71,32 +76,38 @@ function HomePage() {
     }
   };
 
-  //filter by category
+  // Handle category filter change
   const handleFilter = (value, id) => {
-    let all = [...checked];
+    let updatedChecked = [...checked];
     if (value) {
-      all.push(id);
+      updatedChecked.push(id);
     } else {
-      all = all.filter((c) => c !== id);
+      updatedChecked = updatedChecked.filter((c) => c !== id);
     }
-    setChecked(all);
+    setChecked(updatedChecked);
   };
 
+  // Apply filters and fetch filtered products
   useEffect(() => {
-    if (!checked.length || !radio.length) getAllProducts();
-  }, [checked.length, radio.length]);
-
-  useEffect(() => {
-    if (checked.length || radio.length) filterProduct();
+    if (!checked.length && !radio.length) {
+      getAllProducts();
+    } else {
+      filterProducts();
+    }
   }, [checked, radio]);
 
-  //get filtered product
-  const filterProduct = async () => {
+  // Filter products based on checked categories and price range
+  const filterProducts = async () => {
     try {
       const { data } = await axios.post("/api/v1/products/product-filters", {
         checked,
         radio,
       });
+      if (data.products.length === 0) {
+        setNoProductsFound(true);
+      } else {
+        setNoProductsFound(false);
+      }
       setProducts(data?.products);
     } catch (error) {
       console.log(error);
@@ -131,51 +142,65 @@ function HomePage() {
           </div>
           <div className="d-flex flex-column mt-3">
             <div
-             className="btn"
-             style={{backgroundColor: '#ff5f00', borderColor: '#ff5f00', color: '#ffffff' }}
+              className="btn"
+              style={{
+                backgroundColor: "#ff5f00",
+                borderColor: "#ff5f00",
+                color: "#ffffff",
+              }}
               onClick={() => window.location.reload()}
             >
-              Reset Fiters
+              Reset Filters
             </div>
           </div>
         </div>
         <div className="col-md-9">
-          <h1 className="text-center">All Product</h1>
+          <h1 className="text-center">All Products</h1>
           <div className="d-flex flex-wrap">
-            {products?.map((p) => (
-              <div className="card m-2" style={{ width: "18rem" }}>
-                <img
-                  src={`/api/v1/products/product-photo/${p._id}`}
-                  className="card-img-top"
-                  alt={p.name}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{p.name}</h5>
-                  <p className="card-text">{p.description.substring(0, 30)}</p>
-                  <p className="card-text">₹ {p.price}</p>
-
-                  <button className="btn btn-primary ms-1" onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
-                  <button className="btn btn-success ms-1">
-                    Add to Cart
-                  </button>
+            {products?.length > 0 ? (
+              products.map((p) => (
+                <div key={p._id} className="card m-2" style={{ width: "18rem" }}>
+                  <img
+                    src={`/api/v1/products/product-photo/${p._id}`}
+                    className="card-img-top"
+                    alt={p.name}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{p.name}</h5>
+                    <p className="card-text">{p.description.substring(0, 30)}</p>
+                    <p className="card-text">₹ {p.price}</p>
+                    <button
+                      className="btn btn-primary ms-1"
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                    >
+                      More Details
+                    </button>
+                    <button className="btn btn-success ms-1">Add to Cart</button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <h6>No products found</h6>
+            )}
           </div>
-          <div className="m-2 p-3">
-            {products && products.length < total && (
+          {products && products.length < total && !noProductsFound && (
+            <div className="m-2 p-3">
               <button
-              className="btn"
-                style={{backgroundColor: '#ff5f00', borderColor: '#ff5f00', color: '#ffffff' }}
+                className="btn"
+                style={{
+                  backgroundColor: "#ff5f00",
+                  borderColor: "#ff5f00",
+                  color: "#ffffff",
+                }}
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page + 1);
                 }}
               >
-                {loading ? "Loading...." : "Loadmore"}
+                {loading ? "Loading...." : "Load More"}
               </button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </Layout>

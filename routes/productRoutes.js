@@ -12,6 +12,7 @@ import { productCountController } from "../controllers/productController.js";
 import { productListController } from "../controllers/productController.js";
 import { searchProductController } from "../controllers/productController.js";
 import { relatedProductController } from "../controllers/productController.js";
+import { productCategoryController } from "../controllers/productController.js";
 
 //router object
 const router = express.Router()
@@ -60,5 +61,8 @@ router.get('/search/:keyword', searchProductController)
 
 //similar product
 router.get('/related-product/:pid/:cid',relatedProductController)
+
+//category wise Product
+router.get('/product-category/:slug',productCategoryController)
 
 export default router

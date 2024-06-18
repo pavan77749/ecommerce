@@ -102,3 +102,11 @@
   color: black !important;
 }
 
+.cat-btn{
+  padding: 50px 50px !important;
+  font-size: 2rem;
+}
+.cat-btn:hover{
+  background-color: #ff6003e5;
+  color: #ffffff;
+}
