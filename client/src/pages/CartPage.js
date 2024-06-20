@@ -106,7 +106,7 @@ const CartPage = () => {
                 <div className="col-md-8 mt-2 ">
                   <h6>{p.name}</h6>
                   <p>{p.description.substring(0, 40)}...</p>
-                  <h6 style={{ color: "green" }}>Price : ₹ {p.price}</h6>
+                  <h6 style={{ color: "green" }}>Price : $ {p.price}</h6>
 
                   <button
                     className="btn btn-danger mt-3 "

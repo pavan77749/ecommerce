@@ -85,7 +85,7 @@ const ProductDetails = () => {
             <h1 className="text-center">{product.name} Details</h1>
             <h5>Name: {product.name}</h5>
             <h5>Description: {product.description}</h5>
-            <h5 style={{color:"green"}}>Price: ₹{product.price}</h5>
+            <h5 style={{color:"green"}}>Price: ${product.price}</h5>
             <h5>Category: {product.category?.name}</h5>
             <button className="btn btn-success ms-1"  onClick={() => {
                         setCart([...cart, product]);
@@ -112,7 +112,7 @@ const ProductDetails = () => {
                     <p className="card-text">
                       {relatedProduct.description.substring(0,30)}...
                     </p>
-                    <p className="card-text">Price: ₹{relatedProduct.price}</p>
+                    <p className="card-text">Price: ${relatedProduct.price}</p>
                     <button className="btn btn-success ms-1"  onClick={() => {
                         setCart([...cart, relatedProduct]);
                         localStorage.setItem('cart',JSON.stringify([...cart,relatedProduct]))
