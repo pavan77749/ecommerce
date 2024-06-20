@@ -57,7 +57,7 @@ const CartPage = () => {
           <div className="col-md-8">
             {cart?.map((p) => (
               <div className="row flex-row card mb-2 mt-2">
-                <div className="col-md-4">
+                <div className="col-md-4" >
                   <img
                     src={`/api/v1/products/product-photo/${p._id}`}
                     className="card-img-top"

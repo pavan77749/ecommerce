@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useCart } from "../context/cart.js";
+import toast from "react-hot-toast";
 
 const ProductDetails = () => {
   const params = useParams();
+  const [cart, setCart] = useCart();
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -84,7 +87,11 @@ const ProductDetails = () => {
             <h5>Description: {product.description}</h5>
             <h5 style={{color:"green"}}>Price: ₹{product.price}</h5>
             <h5>Category: {product.category?.name}</h5>
-            <button className="btn btn-success ms-1">Add to Cart</button>
+            <button className="btn btn-success ms-1"  onClick={() => {
+                        setCart([...cart, product]);
+                        localStorage.setItem('cart',JSON.stringify([...cart,product]))
+                        toast.success("Item Added to Cart");
+                      }}>Add to Cart</button>
           </div>
         </div>
         <hr />
@@ -106,7 +113,11 @@ const ProductDetails = () => {
                       {relatedProduct.description.substring(0,30)}...
                     </p>
                     <p className="card-text">Price: ₹{relatedProduct.price}</p>
-                    <button className="btn btn-success ms-1">Add to Cart</button>
+                    <button className="btn btn-success ms-1"  onClick={() => {
+                        setCart([...cart, relatedProduct]);
+                        localStorage.setItem('cart',JSON.stringify([...cart,relatedProduct]))
+                        toast.success("Item Added to Cart");
+                      }}>Add to Cart</button>
                   </div>
                 </div>
               </div>
