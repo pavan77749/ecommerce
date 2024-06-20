@@ -3,6 +3,7 @@ import Layout from '../components/Layout/Layout'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
+import "../styles/CategoryProductStyles.css"
 
 const CategoryProduct = () => {
     const [products,setProducts] = useState([])
@@ -27,11 +28,10 @@ const CategoryProduct = () => {
     }
   return (
     <Layout>
-        <div className="container mt-3 ">
+        <div className="container mt-3 category">
             <h2 className='text-center'>{category?.name}</h2>
             <h6 className='text-center'>{products?.length} results found</h6>
-            <div className="col-md-9 offset-1">
-         
+            <div className="col-md-12 offset-1">
           <div className="d-flex flex-wrap">
             {products?.map((p) => (
               <div className="card m-2" style={{ width: "18rem" }}>
@@ -41,9 +41,10 @@ const CategoryProduct = () => {
                   alt={p.name}
                 />
                 <div className="card-body">
+                  
                   <h5 className="card-title">{p.name}</h5>
-                  <p className="card-text">{p.description.substring(0, 30)}...</p>
-                  <p className="card-text">₹ {p.price}</p>
+                  <p className="card-title">{p.description.substring(0, 30)}...</p>
+                  <p className="card-title card-price">₹ {p.price}</p>
 
                   <button className="btn btn-primary ms-1" onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
                   <button className="btn btn-success ms-1">

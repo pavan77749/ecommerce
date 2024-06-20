@@ -1,0 +1,7 @@
+.category {
+    flex-wrap: wrap;
+    margin-top: 20px !important;
+}
+.category .card img:hover {
+  transform: scale(0.9);
+}

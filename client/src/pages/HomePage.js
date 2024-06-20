@@ -4,6 +4,9 @@ import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/cart.js";
+import toast from "react-hot-toast";
+import "../styles/HomePageStyles.css"
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -15,6 +18,7 @@ function HomePage() {
   const [loading, setLoading] = useState(false);
   const [noProductsFound, setNoProductsFound] = useState(false); // State to track if no products are found
   const navigate = useNavigate();
+  const [cart, setCart] = useCart();
 
   // Fetch categories and total count on initial load
   useEffect(() => {
@@ -116,14 +120,24 @@ function HomePage() {
 
   return (
     <Layout title={"Best Offers - Ecommerce Shop"}>
-      <div className="row mt-3">
+     {/* banner image */}
+     <img
+        src="/images/img1.webp"
+        className="banner-img"
+        alt="bannerimage"
+        width={"100%"}
+      />
+      {/* banner image */}
+      <div className="container-fluid row mt-3 home-page">
         <div className="col-md-2 ms-5">
           <h4 className="text-left ">Filter By Category</h4>
+          <hr />
           <div className="d-flex flex-column mb-3">
             {categories?.map((c) => (
               <Checkbox
                 key={c._id}
                 onChange={(e) => handleFilter(e.target.checked, c._id)}
+                style={{ font: "20px" }}
               >
                 {c.name}
               </Checkbox>
@@ -131,11 +145,14 @@ function HomePage() {
           </div>
           {/* Price Filter */}
           <h4 className="text-left">Filter By Price</h4>
+          <hr />
           <div className="d-flex flex-column">
             <Radio.Group onChange={(e) => setRadio(e.target.value)}>
               {Prices?.map((p) => (
                 <div key={p.id}>
-                  <Radio value={p.array}>{p.name}</Radio>
+                  <Radio value={p.array} style={{ font: "20px" }}>
+                    {p.name}
+                  </Radio>
                 </div>
               ))}
             </Radio.Group>
@@ -154,28 +171,44 @@ function HomePage() {
             </div>
           </div>
         </div>
-        <div className="col-md-9">
+        <div className="col-md-9 mt-4">
           <h1 className="text-center">All Products</h1>
           <div className="d-flex flex-wrap">
             {products?.length > 0 ? (
               products.map((p) => (
-                <div key={p._id} className="card m-2" style={{ width: "18rem" }}>
+                <div
+                  key={p._id}
+                  className="card m-2"
+                  style={{ width: "18rem" }}
+                >
                   <img
                     src={`/api/v1/products/product-photo/${p._id}`}
                     className="card-img-top"
                     alt={p.name}
+                    style={{ maxHeight: "200px", objectFit: "contain" }}
                   />
                   <div className="card-body">
                     <h5 className="card-title">{p.name}</h5>
-                    <p className="card-text">{p.description.substring(0, 30)}</p>
-                    <p className="card-text">₹ {p.price}</p>
+                    <p className="card-text">
+                      {p.description.substring(0, 30)}
+                    </p>
+                    <p className="card-price">₹ {p.price}</p>
                     <button
                       className="btn btn-primary ms-1"
                       onClick={() => navigate(`/product/${p.slug}`)}
                     >
                       More Details
                     </button>
-                    <button className="btn btn-success ms-1">Add to Cart</button>
+                    <button
+                      className="btn btn-success ms-1"
+                      onClick={() => {
+                        setCart([...cart, p]);
+                        localStorage.setItem('cart',JSON.stringify([...cart,p]))
+                        toast.success("Item Added to Cart");
+                      }}
+                    >
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
               ))

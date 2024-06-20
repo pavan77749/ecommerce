@@ -1,0 +1,21 @@
+.home-page h1 {
+    color: #ff5f00;
+    font-family: "Playfair Display", serif;
+}
+
+.home-page {
+    display: flex;
+    flex-wrap: wrap;
+}
+.banner-img{
+    margin-top: 10px;
+}
+
+.home-page .card-price {
+    color: green;
+    font-weight: bold;
+}
+
+.home-page .card img:hover {
+    transform: scale(0.9);
+}
