@@ -13,6 +13,8 @@ import { productListController } from "../controllers/productController.js";
 import { searchProductController } from "../controllers/productController.js";
 import { relatedProductController } from "../controllers/productController.js";
 import { productCategoryController } from "../controllers/productController.js";
+import { braintreeTokenController } from "../controllers/productController.js";
+import { brainTreePaymentsController } from "../controllers/productController.js";
 
 //router object
 const router = express.Router()
@@ -64,5 +66,12 @@ router.get('/related-product/:pid/:cid',relatedProductController)
 
 //category wise Product
 router.get('/product-category/:slug',productCategoryController)
+
+//payment routes 
+//token
+router.get('/braintree/token', braintreeTokenController)
+
+//payments
+router.post('/braintree/payment', requireSignIn, brainTreePaymentsController)
 
 export default router
