@@ -46,12 +46,12 @@ const Orders = () => {
                     </thead>
                     <tbody>
                       <tr>
-                        <th>{i + 1}</th>
-                        <th>{o?.status}</th>
-                        <th>{o?.buyer?.name}</th>
-                        <th>{moment(o?.createAt).fromNow()}</th>
-                        <th>{o?.payment.success ? "Success" : "Failed"}</th>
-                        <th>{o?.products?.length}</th>
+                        <td>{i + 1}</td>
+                        <td>{o?.status}</td>
+                        <td>{o?.buyer?.name}</td>
+                        <td>{moment(o?.createAt).fromNow()}</td>
+                        <td>{o?.payment.success ? "Success" : "Failed"}</td>
+                        <td>{o?.products?.length}</td>
                       </tr>
                     </tbody>
                   </table>
