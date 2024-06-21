@@ -3,7 +3,7 @@
 
 Welcome to the eCommerce Website project repository! This project is designed to showcase an online shopping platform with separate user and admin dashboards, as well as integrated payment gateway functionality.
 
-Live Preview : https://ecommerce-4xkg4mevc-pavan77749s-projects.vercel.app/
+
 
 ## Features
 
